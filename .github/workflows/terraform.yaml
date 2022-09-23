@@ -1,4 +1,4 @@
-name: Deploy my Lambda Function
+name: Deploy my Terraform code
 
 # trigger on all push events to main branch
 on: 
