@@ -1,4 +1,4 @@
-name: Deploy my Terraform code
+name: Deploying my Terraform code
 
 # trigger on all push events to main branch
 on: 
