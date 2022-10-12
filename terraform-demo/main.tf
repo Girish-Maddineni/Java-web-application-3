@@ -181,7 +181,7 @@ resource "aws_key_pair" "pem" {
    public_key = tls_private_key.pem.public_key_openssh
 
    provisioner "local-exec" {
-     command = "echo '${tls_private_key.pem.private_key_openssh}' > ./my-key.pem"
+     command = "echo '${tls_private_key.pem.private_key_openssh}' > ./my-key-1.pem"
    }
 }
 
