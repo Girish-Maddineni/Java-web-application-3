@@ -5,7 +5,7 @@ name: Deploying my Terraform code
 on: 
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
