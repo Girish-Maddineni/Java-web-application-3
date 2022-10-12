@@ -25,10 +25,16 @@ jobs:
           terraform_version: 1.1.7
       - name: Terraform Lifecycle to create resources
         run: |
-             cd terraform
+             cd terraform-demo
              terraform init
              terraform fmt
              terraform validate
              terraform plan
              terraform apply --auto-approve
+      - name: Archive the private key
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-key
+          path: ./terraform-demo/my-key
+     
              
