@@ -37,24 +37,49 @@ jobs:
              cd terraform-demo
              terraform destroy --auto-approve
           
-#       - name: Terraform Lifecycle to create resources
-#         run: |
-#              cd terraform-demo
-#              terraform init
-#              terraform fmt
-#              terraform validate
-#              terraform plan
-#              terraform apply --auto-approve
+      - name: Terraform Lifecycle to create resources
+        run: |
+             cd terraform-demo
+             terraform init
+             terraform fmt
+             terraform validate
+             terraform plan
+             terraform apply --auto-approve
              
-#       - name: Archive the private key
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: my-key.pem  
-#           path: ./terraform-demo/my-key-1.pem
+      - name: Archive the private key
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-key.pem  
+          path: ./terraform-demo/my-key-1.pem
           
-#       - name: Archive the state file
-#         uses: actions/upload-artifact@v2
-#         with:
-#           name: terraform.tfstate
-#           path: ./terraform-demo/*.tfstate
+      - name: Archive the state file
+        uses: actions/upload-artifact@v2
+        with:
+          name: terraform.tfstate
+          path: ./terraform-demo/*.tfstate
+
+  destroy:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+          
+      - name: Terraform action
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.1.7
+          
+      - name: Archive the state file
+        uses: actions/download-artifact@v3
+        with:
+          name: terraform.tfstate
+          path: ./
+          
+      - name: Terraform Lifecycle to create resources
+        run: terraform destroy --auto-approve
+          
              
