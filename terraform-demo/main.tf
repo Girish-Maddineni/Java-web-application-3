@@ -177,7 +177,7 @@ resource "tls_private_key" "pem" {
 resource "aws_key_pair" "pem" {
 #   key_name   = "mykey-1"
 #   public_key = file("/Users/girish.maddineni/.ssh/id_rsa.pub")
-   key_name = "my-key"
+   key_name = "my-key-1"
    public_key = tls_private_key.pem.public_key_openssh
 
    provisioner "local-exec" {
