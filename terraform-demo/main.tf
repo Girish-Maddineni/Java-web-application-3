@@ -1,7 +1,7 @@
 provider "aws" {
   region = var.aws_region
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
+#   access_key = var.aws_access_key
+#   secret_key = var.aws_secret_key
 }
 
 data "aws_availability_zones" "zones" {
@@ -169,10 +169,21 @@ resource "aws_network_acl" "my-acl" {
   }
 }
 
-# resource "aws_key_pair" "pem" {
+resource "tls_private_key" "pem" {
+  algorithm = "RSA"
+  rsa_bits = 4096
+}
+
+resource "aws_key_pair" "pem" {
 #   key_name   = "mykey-1"
 #   public_key = file("/Users/girish.maddineni/.ssh/id_rsa.pub")
-# }
+   key_name = "my-key"
+   public_key = tls_private_key.pem.public_key_openssh
+
+   provisioner "local-exec" {
+     command = "echo '${tls_private_key.pem.private_key_openssh}' > ./my-key.pem"
+   }
+}
 
 resource "aws_instance" "ec2" {
   ami                         = "ami-08e2d37b6a0129927"
@@ -180,8 +191,8 @@ resource "aws_instance" "ec2" {
   instance_type               = "t2.micro"
   subnet_id                   = aws_subnet.pub-subnet-1.id
   vpc_security_group_ids      = [aws_security_group.my-sg.id]
-#   key_name                    = aws_key_pair.pem.key_name
-  key_name                    = "mykey-1"
+  key_name                    = aws_key_pair.pem.key_name
+#   key_name                    = "mykey-1"
   tags = {
     "Name" = "demo"
   }
