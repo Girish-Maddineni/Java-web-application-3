@@ -69,6 +69,12 @@ jobs:
           name: terraform.tfstate
           path: ./
           
+      - name: Archive the private key
+        uses: actions/download-artifact@v3
+        with:
+          name: my-key.pem  
+          path: ./
+          
       - name: Terraform Lifecycle to destroy resources
         run: terraform destroy --auto-approve
           
