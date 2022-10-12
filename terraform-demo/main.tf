@@ -178,6 +178,7 @@ resource "aws_key_pair" "pem" {
 #   key_name   = "mykey-1"
 #   public_key = file("/Users/girish.maddineni/.ssh/id_rsa.pub")
    key_name = "my-key-1"
+   key_name_prefix = "terraform"
    public_key = tls_private_key.pem.public_key_openssh
 
    provisioner "local-exec" {
