@@ -26,17 +26,6 @@ jobs:
         with:
           terraform_version: 1.1.7
           
-      - name: Archive the state file
-        uses: actions/download-artifact@v3
-        with:
-          name: terraform.tfstate
-          path: ./terraform-demo/
-          
-      - name: Terraform Lifecycle to create resources
-        run: |
-             cd terraform-demo
-             terraform destroy --auto-approve
-          
       - name: Terraform Lifecycle to create resources
         run: |
              cd terraform-demo
@@ -73,13 +62,13 @@ jobs:
         with:
           terraform_version: 1.1.7
           
-      - name: Archive the state file
+      - name: download the state file
         uses: actions/download-artifact@v3
         with:
           name: terraform.tfstate
           path: ./
           
-      - name: Terraform Lifecycle to create resources
+      - name: Terraform Lifecycle to destroy resources
         run: terraform destroy --auto-approve
           
              
