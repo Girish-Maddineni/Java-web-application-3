@@ -1,0 +1,173 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<groupId>com.demo</groupId>
+	<artifactId>Java-web-application</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	
+	<name>Java-web-application</name>
+
+	<description>Simple Java Web Application</description>
+
+	<properties>
+		<jdk.version>1.8</jdk.version>
+		<spring.version>5.1.2.RELEASE</spring.version>
+		<junit.version>4.11</junit.version>
+		<log4j.version>1.2.17</log4j.version>
+	<!--    <sonar.host.url>http://18.118.154.165:9000/</sonar.host.url>
+		<sonar.login>bd48eb4f2344a2ffca341aa56ab8c681e8948319</sonar.login> --> 
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+	</properties>
+
+	<dependencies>
+		
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20160212</version>
+		</dependency>
+		
+		<!-- test dependencies -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>1.9.5</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- compile dependencies -->
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework</groupId>
+    		<artifactId>spring-web</artifactId>
+    		<version>${spring.version}</version>
+  		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		
+		<!-- provided dependencies -->
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		
+	</dependencies>
+	
+	<distributionManagement>
+   	      <repository>
+       		 <id>central</id>
+        	 <name>jfrog-releases</name>
+       		 <url>http://3.139.108.20:8081/artifactory/maven-libs-release-local</url>
+    	      </repository>
+
+	      <snapshotRepository>
+        	<id>snapshots</id>
+       		<name>jfrog-snapshots</name>
+       		<url>http://3.139.108.20:8081/artifactory/java-web-app-libs-snapshot-local</url>
+   	     </snapshotRepository>
+	    
+	</distributionManagement>
+	
+	<build>
+		<finalName>java-web-application</finalName>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>${jdk.version}</source>
+					<target>${jdk.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.11.v20150529</version>
+				<configuration>
+					<scanIntervalSeconds>10</scanIntervalSeconds>
+					<webApp>
+						<contextPath>/java-web-application</contextPath>
+					</webApp>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<wtpversion>2.0</wtpversion>
+					<wtpContextName>java-web-application</wtpContextName>
+				</configuration>
+			</plugin>
+			<plugin>
+			    <groupId>org.jfrog.buildinfo</groupId>
+			    <artifactId>artifactory-maven-plugin</artifactId>
+			    <version>3.2.3</version>
+			    <inherited>false</inherited>
+			    <executions>
+				<execution>
+				    <id>build-info</id>
+				    <goals>
+					<goal>publish</goal>
+				    </goals>
+				    <configuration>
+					<deployProperties>
+					    <gradle>awesome</gradle>
+					    <review.team>qa</review.team>
+					</deployProperties>
+					<publisher>
+					    <contextUrl>http://18.189.143.52:8081/artifactory/</contextUrl>
+					    <username>admin</username>
+					    <password>password</password>
+					    <repoKey>java-web-app-libs-release-local</repoKey>
+					    <snapshotRepoKey>java-web-app-libs-snapshot-local</snapshotRepoKey>
+					</publisher>
+				    </configuration>
+				</execution>
+			    </executions>
+			</plugin>		
+</plugins>
+	</build>
+	
+	
+</project>

@@ -1,0 +1,40 @@
+---
+- hosts: all
+  become: true
+  #gather_facts: no
+  vars:
+    name: httpd
+  tasks:
+  - name: install git
+    package:
+      name: "{{item.name}}"
+      state: "{{item.state}}"
+    with_items:
+      - {'name':'git', 'state':'present'}
+      - {'name':'tree', 'state':'present'}
+      - {'name':'unzip', 'state':'present'}
+    tags:
+      - git
+
+  - name: copy
+    template:
+      src: index.html
+      dest: /var/www/html/index.html
+    tags:
+      - copy
+
+  - name: httpd installation
+    package:
+      name: "{{name}}"
+      state: installed
+    when: ansible_facts['os_family'] == "RedHat"
+    notify:
+    - start httpd
+    tags:
+      - httpd
+
+  handlers:
+  - name: start httpd
+    service:
+      name: httpd
+      state: started
