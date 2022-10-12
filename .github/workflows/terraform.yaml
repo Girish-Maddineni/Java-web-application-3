@@ -38,8 +38,8 @@ jobs:
       - name: Archive the private key
         uses: actions/upload-artifact@v2
         with:
-          name: my-key.pem  
-          path: ./terraform-demo/my-key-1.pem
+          name: my-key.pem  #name for the artifact to assign
+          path: ./terraform-demo/my-key.pem
           
       - name: Archive the state file
         uses: actions/upload-artifact@v2
